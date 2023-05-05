@@ -1,18 +1,13 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const { fetchNetworkPingInfo } = require("./networkpinginfo");
 
-const serverConfig = Object.assign(
-  { ip: undefined },
-  require("./config.js"),
-);
+const serverConfig = Object.assign({ ip: undefined }, require("./config.js"));
 const emptyField = { name: "\u200B", value: "\u200B", inline: false };
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("server")
-    .setDescription(
-      "Check if the Minecraft server is running."
-    ),
+    .setDescription("Check if the Minecraft server is running."),
   async execute(interaction) {
     if (serverConfig.ip) {
       let fields = [];
@@ -51,7 +46,7 @@ module.exports = {
         if (info.players) {
           fields.push({
             // prettier-ignore
-            name: `Players (${info.players.online || "?"}/${info.players.max || "?"})`,
+            name: `Players (${info.players.online || "0"}/${info.players.max || "?"})`,
             value: info.players.sample
               ? info.players.sample.map((x) => x.name).join("\n")
               : "No players right now :(",

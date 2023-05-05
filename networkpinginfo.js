@@ -51,7 +51,7 @@ function popInt(data, index) {
     b = data[index++];
   }
   return [index, acc | (b << shift)];
-}
+}   
 
 /**
  * pings a server using the Minecraft protocol, returning the JSON ping response
