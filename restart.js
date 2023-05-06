@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const { spawn } = require("node:child_process");
 const { once } = require("./utils");
 
-const serverConfig = Object.assign({ service: "" }, require("./config.js"));
+const serverConfig = Object.assign({ service: "" }, require("./config"));
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -11,8 +11,8 @@ module.exports = {
   async execute(interaction) {
     if (serverConfig.service) {
       await interaction.deferReply();
-      await once(spawn("docker-compose", [service]), "close");
-      await interaction.reply("Server restarted!");
+      await once(spawn("docker-compose", ["restart", serverConfig.service]), "close");
+      await interaction.editReply("Server restarted!");
       return;
     } else {
       await interaction.reply({
