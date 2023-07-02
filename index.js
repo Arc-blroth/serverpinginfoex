@@ -28,8 +28,12 @@ if (process.argv.slice(2).includes("register")) {
       const rest = new REST({ authPrefix: "Bearer" }).setToken(
         token.access_token
       );
+      let commands = [server.data.toJSON()];
+      if (config.service) {
+        commands.push(restart.data.toJSON());
+      }
       return rest.put(Routes.applicationCommands(config.client_id), {
-        body: [restart.data.toJSON(), server.data.toJSON()],
+        body: commands,
       });
     })
     .then((data) => {
@@ -42,7 +46,7 @@ if (process.argv.slice(2).includes("register")) {
       if (interaction.commandName == "server") {
         await server.execute(interaction);
         return;
-      } else if (interaction.commandName == "server-restart") {
+      } else if (config.service && interaction.commandName == "server-restart") {
         await restart.execute(interaction);
         return;
       }

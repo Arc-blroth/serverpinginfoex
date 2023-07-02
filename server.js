@@ -7,13 +7,21 @@ const emptyField = { name: "\u200B", value: "\u200B", inline: false };
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("server")
-    .setDescription("Check if the Minecraft server is running."),
+    .setDescription("Check if the Minecraft server is running.")
+    .addStringOption(option =>
+      option
+        .setName("name")
+        .setDescription("Which server to query.")
+        .setRequired(false)
+        .addChoices(...Object.entries(serverConfig.ips).map(([server, _]) => ({ name: server, value: server }))) 
+    ),
   async execute(interaction) {
-    if (serverConfig.ip) {
+    if (serverConfig.ips) {
       let fields = [];
       let files = [];
       try {
-        let info = await fetchNetworkPingInfo(serverConfig.ip);
+        const ip = serverConfig.ips[interaction.options.getString('name') ?? serverConfig.default];
+        let info = await fetchNetworkPingInfo(ip);
         console.log("[/server] " + JSON.stringify(info));
         let embed = new EmbedBuilder()
           .setColor(0x31f766)
@@ -35,7 +43,7 @@ module.exports = {
               .setDescription("Server icon")
           );
         }
-        fields.push({ name: "IP", value: serverConfig.ip, inline: false });
+        fields.push({ name: "IP", value: ip, inline: false });
         if (info.version?.name) {
           fields.push({
             name: "Version",
