@@ -35,7 +35,7 @@ module.exports = {
           files.push(
             new AttachmentBuilder(
               Buffer.from(
-                data.favicon.replace(/^data:image\/png;base64,/, ""),
+                info.favicon.replace(/^data:image\/png;base64,/, ""),
                 "base64"
               )
             )
