@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder, AttachmentBuilder, EmbedBuilder } = require("discord.js");
 const { fetchNetworkPingInfo } = require("./networkpinginfo");
 
 const serverConfig = Object.assign({ ip: undefined }, require("./config.js"));
