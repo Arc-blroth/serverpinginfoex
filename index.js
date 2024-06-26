@@ -65,7 +65,8 @@ if (process.argv.slice(2).includes("register")) {
       res.send({ type: InteractionType.PING });
       return;
     }
-    client.actions.InteractionCreate.handle(req.body);
+    message.channel.recipients = [];
+    client.actions.InteractionCreate.handle(message);
   });
 
   app.listen(config.port || 8080, () =>
