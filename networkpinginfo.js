@@ -56,7 +56,7 @@ function popInt(data, index) {
 /**
  * pings a server using the Minecraft protocol, returning the JSON ping response
  * @param {string} ip - address of the server
- * @returns {{ version: { name: string?, protocol: number? }?, players: { max: number?, online: number?, sample: array<{ name: string?, id: string? }>? }?, description: { text: string? }?, favicon: string? }} - server response
+ * @returns {{ version: { name: string?, protocol: number? }?, players: { max: number?, online: number?, sample: array<{ name: string?, id: string? }>? }?, description: ({ text: string? } | string)?, favicon: string? }} - server response
  */
 // this function has been ported from Node, to Java, to Kotlin, and now back to Node again
 async function fetchNetworkPingInfo(ip) {

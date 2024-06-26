@@ -27,7 +27,9 @@ module.exports = {
           .setColor(0x31f766)
           .setTitle("Server is up!")
           .setTimestamp();
-        if (info.description?.text) {
+        if (typeof info.description === "string") {
+          embed.setDescription(info.description);
+        } else if (info.description?.text) {
           embed.setDescription(info.description.text);
         }
         if (info.favicon) {
